@@ -8,6 +8,7 @@ if not os.path.isfile("config.py"):
 else:
     import config
 
+
 # Here we name the cog and create a new class for the cog.
 class Meeting_Handler(commands.Cog, name="knock"):
     def __init__(self, bot):
@@ -23,6 +24,7 @@ class Meeting_Handler(commands.Cog, name="knock"):
             teacher outside: sends an stored message
         """
         if config.DOOR_STATUS == 'OPEN':
+            # TODO
             # move teacher & author
             embed = discord.Embed(
                 title="Door is open",
@@ -31,6 +33,7 @@ class Meeting_Handler(commands.Cog, name="knock"):
             )
             await context.send(embed=embed)
         if config.DOOR_STATUS == 'CLOSED':
+            # TODO
             embed = discord.Embed(
                 title="Door is closed",
                 description=f"**{context.message.author.id}** you have been put in the waiting queue, to check for "
@@ -46,7 +49,6 @@ class Meeting_Handler(commands.Cog, name="knock"):
                 color=config.warning
             )
             await context.send(embed=embed)
-
 
 
 # And then we finally add the cog to the bot so that it can load, unload, reload and use it's content.

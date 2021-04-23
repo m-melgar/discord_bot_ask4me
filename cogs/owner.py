@@ -6,6 +6,7 @@ if not os.path.isfile("config.py"):
 else:
     import config
 
+
 class owner(commands.Cog, name="owner"):
     def __init__(self, bot):
         self.bot = bot
@@ -144,16 +145,56 @@ class owner(commands.Cog, name="owner"):
             )
             await context.send(embed=embed)
 
-    async def set_meeting_room_status(self, context):
+    @commands.group(name="room")
+    async def room(self, context):
+        """
+        lets you change room status
+        """
+        if context.invoked_subcommand is None:
+            embed = discord.Embed(
+                title=f"Currently room status",
+                description=f"{config.DOOR_STATUS}",
+                color=0x0000FF
+            )
+            await context.send(embed=embed)
+
+    @room.command(name="set")
+    async def set_meeting_door_status(self, context, *, args):
         """
         modifies meeting room status
         """
         if context.message.author.id in config.TEACHER:
+            if args == 'OPEN' or args == 'CLOSED' or args == 'OUT':
+                embed = discord.Embed(
+                    title="Error!",
+                    description="available room status: OPEN or CLOSED or OUT (must use capital letters)",
+                    color=config.error
+                )
+                await context.sed(embed=embed)
+            else:
+                try:
+                    config.DOOR_STATUS = args
+                    embed = discord.Embed(
+                        title="Success",
+                        description="door status changed",
+                        color=config.success
+                    )
+                    await context.sed(embed=embed)
 
-            try:
-                config.MEETING_ROOM_ID =
-
-
+                except:
+                    embed = discord.Embed(
+                        title="Error!",
+                        description="an error ocurred when changing door status",
+                        color=config.error
+                    )
+                    await context.sed(embed=embed)
+        else:
+            embed = discord.Embed(
+                title="Error!",
+                description="You don't have the permission to use this command.",
+                color=config.error
+            )
+            await context.send(embed=embed)
 
 
 def setup(bot):
