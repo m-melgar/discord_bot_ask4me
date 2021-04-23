@@ -32,8 +32,12 @@ class Meeting_Handler(commands.Cog, name="knock"):
                 color=config.success
             )
             await context.send(embed=embed)
+            channel = discord.utils.find(lambda x: x.name == config.MEETING_ROOM_ID, context.server.channels)
+            await context.client.move_member(context.message.author, channel)
+
         if config.DOOR_STATUS == 'CLOSED':
             # TODO
+            q = persistqueue.SQLiteQueue()
             embed = discord.Embed(
                 title="Door is closed",
                 description=f"**{context.message.author.id}** you have been put in the waiting queue, to check for "
