@@ -11,7 +11,7 @@ DOOR_STATUS = "close"
 MEETING_ROOM_ID = 835177151397494804
 
 # Pre-defined messages
-TEACHER_OUTSIDE_MESSAGE = "Im currently out of discord, you can send me an email to <email@addres.com>"
+TEACHER_OUTSIDE_MESSAGE = "Im currently out of discord, you can send me an email to marcos.melgar.segovia@gmail.com or instagram dm @imcosmicowl"
 
 # Bot colors
 main_color = 0xD75BF4

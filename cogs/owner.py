@@ -1,6 +1,6 @@
 import os, sys, discord
 from discord.ext import commands
-from persistqueue import Queue
+import persistqueue
 
 if not os.path.isfile("config.py"):
     sys.exit("'config.py' not found! Please add it and try again.")
@@ -146,11 +146,11 @@ class owner(commands.Cog, name="owner"):
             )
             await context.send(embed=embed)
 
-    @commands.group(name="room")
+    @commands.group(name="door")
     async def room(self, context):
         """
         displays room status
-        set: modifies meeting room status
+                set: modifies meeting room status
         """
         if context.invoked_subcommand is None:
             embed = discord.Embed(
@@ -200,8 +200,17 @@ class owner(commands.Cog, name="owner"):
             await context.send(embed=embed)
 
     @commands.command(name="next")
-    async def embed(self, context):
-        q = Queue(config.DB_PATH, autosave=True)
+    async def next_queue(self, context):
+        q = persistqueue.UniqueQ(config.DB_PATH)
+        if q.size == 0:
+            embed = discord.Embed(
+                title="Empty queue",
+                description="no more people in the queue",
+                color=config.error
+            )
+            await context.send(embed=embed)
+            pass
+
         next_member_id = q.get()
         user = discord.utils.get(self.bot.get_all_members(), id=next_member_id)
         if user:
@@ -213,6 +222,17 @@ class owner(commands.Cog, name="owner"):
                 color=config.error
             )
             await context.send(embed=embed)
+
+    @commands.command(name="clean")
+    async def clean_queue   (self, context):
+        q = persistqueue.UniqueQ(config.DB_PATH)
+        q.empty
+        embed = discord.Embed(
+            title="Queue deleted!",
+            color=config.success
+        )
+        await context.send(embed=embed)
+
 
 
 
