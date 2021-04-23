@@ -24,7 +24,7 @@ class general(commands.Cog, name="general"):
         )
         embed.add_field(
             name="Owner:",
-            value="Krypton#2188",
+            value="CISU#0871",
             inline=True
         )
         embed.add_field(
@@ -124,7 +124,7 @@ class general(commands.Cog, name="general"):
         Get the invite link of the discord server of the bot for some support.
         """
         await context.send("I sent you a private message!")
-        await context.author.send("Join my discord server by clicking here: https://discord.gg/HzJ3Gfr")
+        await context.author.send("Join my discord server by clicking here: https://discord.gg/FT459j5P")
 
     @commands.command(name="poll")
     async def poll(self, context, *args):
@@ -164,26 +164,6 @@ class general(commands.Cog, name="general"):
             text=f"Question asked by: {context.message.author}"
         )
         await context.send(embed=embed)
-
-    @commands.command(name="bitcoin")
-    async def bitcoin(self, context):
-        """
-        Get the current price of bitcoin.
-        """
-        url = "https://api.coindesk.com/v1/bpi/currentprice/BTC.json"
-        # Async HTTP request
-        async with aiohttp.ClientSession() as session:
-            raw_response = await session.get(url)
-            response = await raw_response.text()
-            response = json.loads(response)
-            embed = discord.Embed(
-                title=":information_source: Info",
-                description=f"Bitcoin price is: ${response['bpi']['USD']['rate']}",
-                color=config.success
-            )
-            await context.send(embed=embed)
-
-
 
 
 def setup(bot):

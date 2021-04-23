@@ -1,14 +1,14 @@
 # Can be multiple prefixes, like this: ("!", "?")
 BOT_PREFIX = "!"
-TOKEN = "YOUR_BOT_TOKEN_HERE"
-APPLICATION_ID = "YOUR_APPLICATION_ID"
-OWNERS = [123456789, 987654321]
+TOKEN = "ODM1MTQxOTg4ODE4ODc4NTM2.YILIlg.Gq9-umjWLDFYpHsrbhm8-liEzvM"
+APPLICATION_ID = "835141988818878536"
+OWNERS = [181073625309249536]
 BLACKLIST = []
-TEACHER = []
-DOOR_STATUS = "open"
+TEACHER = [181073625309249536]
+DOOR_STATUS = "close"
 
 # Room ids
-MEETING_ROOM_ID = 12345
+MEETING_ROOM_ID = 835177151397494804
 
 # Pre-defined messages
 TEACHER_OUTSIDE_MESSAGE = "Im currently out of discord, you can send me an email to <email@addres.com>"
@@ -19,3 +19,6 @@ error = 0xE02B2B
 success = 0x42F56C
 warning = 0xF59E42
 info = 0x4299F5
+
+# queue database
+DB_PATH = './meeting_room_queue'

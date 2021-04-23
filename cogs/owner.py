@@ -1,5 +1,6 @@
 import os, sys, discord
 from discord.ext import commands
+from persistqueue import Queue
 
 if not os.path.isfile("config.py"):
     sys.exit("'config.py' not found! Please add it and try again.")
@@ -148,11 +149,12 @@ class owner(commands.Cog, name="owner"):
     @commands.group(name="room")
     async def room(self, context):
         """
-        lets you change room status
+        displays room status
+        set: modifies meeting room status
         """
         if context.invoked_subcommand is None:
             embed = discord.Embed(
-                title=f"Currently room status",
+                title=f"current door status",
                 description=f"{config.DOOR_STATUS}",
                 color=0x0000FF
             )
@@ -164,13 +166,14 @@ class owner(commands.Cog, name="owner"):
         modifies meeting room status
         """
         if context.message.author.id in config.TEACHER:
-            if args == 'OPEN' or args == 'CLOSED' or args == 'OUT':
+            if args != 'open' and args != 'close' and args != 'out':
+                print(args == 'close')
                 embed = discord.Embed(
                     title="Error!",
-                    description="available room status: OPEN or CLOSED or OUT (must use capital letters)",
+                    description="available door status: 'open' or 'close' or 'out'",
                     color=config.error
                 )
-                await context.sed(embed=embed)
+                await context.send(embed=embed)
             else:
                 try:
                     config.DOOR_STATUS = args
@@ -179,15 +182,15 @@ class owner(commands.Cog, name="owner"):
                         description="door status changed",
                         color=config.success
                     )
-                    await context.sed(embed=embed)
+                    await context.send(embed=embed)
 
                 except:
                     embed = discord.Embed(
                         title="Error!",
-                        description="an error ocurred when changing door status",
+                        description="an error occurred when changing door status",
                         color=config.error
                     )
-                    await context.sed(embed=embed)
+                    await context.send(embed=embed)
         else:
             embed = discord.Embed(
                 title="Error!",
@@ -195,6 +198,25 @@ class owner(commands.Cog, name="owner"):
                 color=config.error
             )
             await context.send(embed=embed)
+
+    @commands.command(name="next")
+    async def embed(self, context):
+        q = Queue(config.DB_PATH, autosave=True)
+        next_member_id = q.get()
+        user = discord.utils.get(self.bot.get_all_members(), id=next_member_id)
+        if user:
+            await user.move_to(self.bot.get_channel(config.MEETING_ROOM_ID))
+        else:
+            embed = discord.Embed(
+                title="Error!",
+                description=f"user{self.bot.get_user(next_member_id)} with ID {next_member_id} not found",
+                color=config.error
+            )
+            await context.send(embed=embed)
+
+
+
+
 
 
 def setup(bot):

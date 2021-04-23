@@ -6,6 +6,7 @@ if not os.path.isfile("config.py"):
 else:
     import config
 
+
 class Fun(commands.Cog, name="fun"):
     def __init__(self, bot):
         self.bot = bot
@@ -13,14 +14,14 @@ class Fun(commands.Cog, name="fun"):
     @commands.command(name="rps")
     async def rock_paper_scissors(self, context):
         choices = {
-            0 : "rock",
-            1 : "paper",
-            2 : "scissors"
+            0: "rock",
+            1: "paper",
+            2: "scissors"
         }
         reactions = {
-            "🪨" : 0,
-            "🧻" : 1,
-            "✂" : 2
+            "🪨": 0,
+            "🧻": 1,
+            "✂": 2
         }
         embed = discord.Embed(title="Please choose", color=config.warning)
         embed.set_author(name=context.author.display_name, icon_url=context.author.avatar_url)
@@ -30,6 +31,7 @@ class Fun(commands.Cog, name="fun"):
 
         def check(reaction, user):
             return user == context.message.author and str(reaction) in reactions
+
         try:
             reaction, user = await self.bot.wait_for("reaction_add", timeout=10, check=check)
 
@@ -65,6 +67,7 @@ class Fun(commands.Cog, name="fun"):
             timeout_embed = discord.Embed(title="Too late", color=config.error)
             timeout_embed.set_author(name=context.author.display_name, icon_url=context.author.avatar_url)
             await choose_message.edit(embed=timeout_embed)
+
 
 def setup(bot):
     bot.add_cog(Fun(bot))

@@ -1,6 +1,6 @@
 import os, sys, discord
 from discord.ext import commands
-import persistqueue
+from persistqueue import Queue
 
 # Only if you want to use variables that are in the config.py file.
 if not os.path.isfile("config.py"):
@@ -23,30 +23,30 @@ class Meeting_Handler(commands.Cog, name="knock"):
             door closed: waits til teacher approval to move teacher and command author to the meeting room
             teacher outside: sends an stored message
         """
-        if config.DOOR_STATUS == 'OPEN':
+        if config.DOOR_STATUS == 'open':
             # TODO
             # move teacher & author
             embed = discord.Embed(
-                title="Door is open",
-                description=f"**{context.message.author.id}** you are now move to the meeting class",
+                title="door is open",
+                description=f"**{context.message.author}** you are now move to the meeting room",
                 color=config.success
             )
             await context.send(embed=embed)
-            channel = discord.utils.find(lambda x: x.name == config.MEETING_ROOM_ID, context.server.channels)
-            await context.client.move_member(context.message.author, channel)
+            await context.author.move_to(self.bot.get_channel(config.MEETING_ROOM_ID))
 
-        if config.DOOR_STATUS == 'CLOSED':
+
+        if config.DOOR_STATUS == 'close':
             # TODO
-            q = persistqueue.SQLiteQueue()
+            q = Queue(config.DB_PATH)
             embed = discord.Embed(
-                title="Door is closed",
-                description=f"**{context.message.author.id}** you have been put in the waiting queue, to check for "
-                            f"your position use command !queue position\nTo remove yourself from the queue use"
-                            f"!queue exit",
+                title="door is closed",
+                description=f"**{context.message.author}** you have been put in the waiting queue",
                 color=config.success
             )
             await context.send(embed=embed)
-        if config.DOOR_STATUS == 'OUT':
+            q.put(context.message.author.id)
+
+        if config.DOOR_STATUS == 'out':
             embed = discord.Embed(
                 title="Im currently out of discord",
                 description=config.TEACHER_OUTSIDE_MESSAGE,
