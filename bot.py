@@ -45,7 +45,7 @@ intents.presences = True
 intents.members = True
 """
 
-intents = discord.Intents.all()
+intents = discord.Intents.default()
 
 bot = Bot(command_prefix=config.BOT_PREFIX, intents=intents)
 

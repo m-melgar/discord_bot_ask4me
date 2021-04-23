@@ -144,5 +144,17 @@ class owner(commands.Cog, name="owner"):
             )
             await context.send(embed=embed)
 
+    async def set_meeting_room_status(self, context):
+        """
+        modifies meeting room status
+        """
+        if context.message.author.id in config.TEACHER:
+
+            try:
+                config.MEETING_ROOM_ID =
+
+
+
+
 def setup(bot):
     bot.add_cog(owner(bot))

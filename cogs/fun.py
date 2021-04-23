@@ -10,18 +10,6 @@ class Fun(commands.Cog, name="fun"):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(name="dick")
-    async def dick(self, context, member : discord.Member = None):
-        """
-        Get the dick's length of a user or yourself.
-        """
-        if not member:
-            member = context.author
-        length = random.randrange(15)
-        embed = discord.Embed(description=f"8{'='*length}D", color=config.main_color)
-        embed.set_author(name=f"{member.display_name}'s Dick", icon_url=member.avatar_url)
-        await context.send(embed=embed)
-
     @commands.command(name="rps")
     async def rock_paper_scissors(self, context):
         choices = {
