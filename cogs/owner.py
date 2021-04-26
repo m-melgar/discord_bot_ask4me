@@ -201,6 +201,9 @@ class owner(commands.Cog, name="owner"):
 
     @commands.command(name="next")
     async def next_queue(self, context):
+        """
+        moves next person in queue to the meeting room
+        """
         q = persistqueue.UniqueQ(config.DB_PATH)
         if q.size == 0:
             embed = discord.Embed(
@@ -224,7 +227,10 @@ class owner(commands.Cog, name="owner"):
             await context.send(embed=embed)
 
     @commands.command(name="clean")
-    async def clean_queue   (self, context):
+    async def clean_queue(self, context):
+        """
+        completely deletes queue
+        """
         q = persistqueue.UniqueQ(config.DB_PATH)
         q.empty
         embed = discord.Embed(
@@ -232,11 +238,6 @@ class owner(commands.Cog, name="owner"):
             color=config.success
         )
         await context.send(embed=embed)
-
-
-
-
-
 
 
 def setup(bot):

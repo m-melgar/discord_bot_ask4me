@@ -34,12 +34,12 @@ class Meeting_Handler(commands.Cog, name="knock"):
             await context.author.move_to(self.bot.get_channel(config.MEETING_ROOM_ID))
 
         if config.DOOR_STATUS == 'close':
-            # TODO
             q = persistqueue.UniqueQ(config.DB_PATH)
             q.put(context.message.author.id)
             embed = discord.Embed(
                 title="door is closed",
-                description=f"**{context.message.author}** you have been put in the waiting queue at position {q.size}",
+                description=f"**{context.message.author}** you have been put in the waiting queue at position {q.size}"
+                            f"\nfriendly reminder that your position in queue is unique",
                 color=config.success
             )
             await context.send(embed=embed)
