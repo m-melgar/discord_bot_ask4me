@@ -3,7 +3,8 @@
 
 
 ## Authors
-* **[Marcos Melgar (@imcosmicowl)](https://github.com/imcosmicowl)**
+* **Template made by: [Krypton](https://github.com/kkrypt0nn)**
+* **ask4me discord bot code by [Marcos Melgar (@imcosmicowl)](https://github.com/imcosmicowl)**
 
 ## Support
 
